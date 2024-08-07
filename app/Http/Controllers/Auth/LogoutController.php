@@ -11,7 +11,7 @@ class LogoutController extends Controller
         auth()->user()->tokens()->delete();
 
         return response()->json([
-        "message"=>"logged out"
+            "message"=>"logged out"
         ]);
     }
 }
