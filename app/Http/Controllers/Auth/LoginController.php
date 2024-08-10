@@ -11,7 +11,10 @@ use App\Http\Requests\LoginRequest;
 class LoginController extends Controller
 {
     public function login(LoginRequest $request){
+        $request->validated();
+        
         $user = User::where('email',$request['email'])->first();
+
         if(!$user || !Hash::check($request['password'],$user->password)){
             return response()->json([
                 'message' => 'Invalid Credentials'
@@ -20,8 +23,11 @@ class LoginController extends Controller
 
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
 
-        return response()->json([
+        $data = [
             'access_token' => $token,
-        ]);
+            'token' => $token,
+            'user' => $user
+        ];
+        return response()->json($data, 200);
     }
 }

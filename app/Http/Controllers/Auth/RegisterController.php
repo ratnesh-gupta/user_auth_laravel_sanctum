@@ -11,6 +11,9 @@ use App\Models\User;
 class RegisterController extends Controller
 {
     public function register(RegisterRequest $request){
+
+        $request->validated();
+
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
