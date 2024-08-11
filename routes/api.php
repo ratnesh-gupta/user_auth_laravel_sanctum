@@ -17,15 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('register', [RegisterController::class, 'register']);
-Route::post('login', [LoginController::class, 'login']);
+Route::post('register', [
+    RegisterController::class, 'register',
+])->name('auth.register');
+
+Route::post('login', [
+    LoginController::class, 'login',
+])->name('auth.login');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [
         LogoutController::class, 'logout',
-    ]);
+    ])->name('auth.logout');
 
     Route::get('/me', function (Request $request) {
         return $request->user();
-    });
+    })->name('auth.me');
 });
